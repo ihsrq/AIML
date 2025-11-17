@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__overlay"></div>
+    <div class="hero__content">
+      <h1>Admin Login</h1>
+      <p>Enter the admin password to manage students.</p>
+      <a href="index.html" class="btn">Back to Home</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding: 2rem;">
+    <section>
+      <h2>Admin Authentication</h2>
+      <form id="adminLoginForm" class="form">
+        <div class="form__row">
+          <label for="adminPassword">Admin Password</label>
+          <input type="password" id="adminPassword" required />
+        </div>
+        <button type="submit" class="btn">Login</button>
+        <p id="adminError" style="color: red; margin-top: 0.5rem;"></p>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    const API_BASE = "http://localhost:3000/api/students";
+    const form = document.getElementById("adminLoginForm");
+    const passwordInput = document.getElementById("adminPassword");
+    const errorEl = document.getElementById("adminError");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      errorEl.textContent = "";
+      const key = passwordInput.value.trim();
+      if (!key) {
+        errorEl.textContent = "Please enter the admin password.";
+        return;
+      }
+
+      try {
+        const res = await fetch(API_BASE, {
+          method: "GET",
+          headers: { "x-admin-key": key },
+        });
+
+        if (!res.ok) {
+          errorEl.textContent = "Incorrect admin password.";
+          return;
+        }
+
+        // Store key for admin.html to use
+        sessionStorage.setItem("adminKey", key);
+        window.location.href = "admin.html";
+      } catch (err) {
+        console.error("Admin login failed", err);
+        errorEl.textContent = "Unable to contact server. Is it running?";
+      }
+    });
+  </script>
+</body>
+</html>

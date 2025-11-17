@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Classroom Hub</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero__overlay"></div>
+      <div class="hero__content">
+        <h1>GMU B.TECH AIML Program Hub</h1>
+        <p>Access year-wise subjects, resources, and announcements in one place.</p>
+        <a href="#years" class="btn">Explore Years</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="announcement" id="announcements">
+        <h2>Announcements</h2>
+        <ul>
+          <li><strong>November 17:</strong> 2nd IA.</li>
+          <li><strong>November 22:</strong> Kannada Kalavaibhava celebration.</li>
+        </ul>
+      </section>
+
+      <section class="years" id="years">
+        <h2>Academic Years</h2>
+        <p class="years__intro">Choose an academic year to view its semester-wise subjects and resources.</p>
+        <div class="years__grid">
+          <article class="year-card">
+            <figure class="year-card__media">
+              <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80" alt="First-year coding foundation practice" />
+            </figure>
+            <h3>Year 1</h3>
+            <ul>
+              <li><a href="login.html">Semester 1</a></li>
+              <li><a href="login.html">Semester 2</a></li>
+            </ul>
+          </article>
+          <article class="year-card">
+            <figure class="year-card__media">
+              <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80" alt="Second-year engineering workshop" />
+            </figure>
+            <h3>Year 2</h3>
+            <ul>
+              <li><a href="login.html">Semester 3</a></li>
+              <li><a href="login.html">Semester 4</a></li>
+            </ul>
+          </article>
+          <article class="year-card">
+            <figure class="year-card__media">
+              <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80" alt="Students presenting AI capstone project" />
+            </figure>
+            <h3>Year 3</h3>
+            <ul>
+              <li><a href="login.html">Semester 5</a></li>
+              <li><a href="login.html">Semester 6</a></li>
+            </ul>
+          </article>
+          <article class="year-card">
+            <figure class="year-card__media">
+              <img src="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=600&q=80" alt="Advanced AIML development teamwork" />
+            </figure>
+            <h3>Year 4</h3>
+            <ul>
+              <li><a href="login.html">Semester 7</a></li>
+              <li><a href="login.html">Semester 8</a></li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="resources" id="resources">
+        <h2>Quick Resources</h2>
+        <div class="resources__list">
+          <div class="resource">
+            <figure class="resource__media">
+              <img
+                src="https://images.unsplash.com/photo-1523289333742-be1143f6b766?auto=format&fit=crop&w=600&q=80"
+                alt="Weekly planner marked with academic tasks"
+              />
+            </figure>
+            <h4>Class Schedule</h4>
+            <p>Stay on top of upcoming lessons and assignments across subjects.</p>
+            <button class="btn btn--outline" data-modal="schedule">View Schedule</button>
+          </div>
+          <div class="resource">
+            <figure class="resource__media">
+              <img
+                src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=600&q=80"
+                alt="Rows of books neatly arranged on library shelves"
+              />
+            </figure>
+            <h4>Virtual Library</h4>
+            <p>Access curated readings, PDFs, and reference materials.</p>
+            <a class="btn btn--outline" href="#" aria-disabled="true">Coming Soon</a>
+          </div>
+          <div class="resource">
+            <figure class="resource__media">
+              <img
+                src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=600&q=80"
+                alt="Keyboard key labeled help illuminated in blue"
+              />
+            </figure>
+            <h4>Help Desk</h4>
+            <p>Reach instructors or classmates when you need assistance.</p>
+            <a class="btn btn--outline" href="mailto:help@classroom.edu">Email Support</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; <span id="year"></span> Digital Classroom Hub. All rights reserved.</p>
+      <nav class="footer__nav">
+        <a href="#announcements">Announcements</a>
+        <a href="#years">Academic Years</a>
+        <a href="#resources">Resources</a>
+        <a href="admin-login.html">Admin</a>
+      </nav>
+    </footer>
+
+    <div class="modal" id="schedule-modal" aria-hidden="true" role="dialog" aria-labelledby="schedule-title">
+      <div class="modal__backdrop" data-close="true"></div>
+      <div class="modal__content">
+        <button class="modal__close" data-close="true" aria-label="Close schedule">&times;</button>
+        <h3 id="schedule-title">Weekly Class Schedule</h3>
+        <figure class="schedule__figure">
+          <img
+            src="class schedule.jpeg"
+            alt="GM University B.Tech CS-AIML AI1A I-semester timetable for the 2025-26 academic year"
+          />
+          <figcaption>Official class timetable shared by the department.</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

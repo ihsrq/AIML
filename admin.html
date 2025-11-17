@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - Manage Students</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__overlay"></div>
+    <div class="hero__content">
+      <h1>Admin - Manage Students</h1>
+      <p>Add, update, or remove student login details.</p>
+      <a href="index.html" class="btn">Back to Home</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding: 2rem;">
+    <section>
+      <h2>Add / Edit Student</h2>
+      <form id="studentForm" class="form">
+        <input type="hidden" id="studentId" />
+        <div class="form__row">
+          <label for="id">Student ID (USN)</label>
+          <input type="text" id="id" required />
+        </div>
+        <div class="form__row">
+          <label for="password">Password</label>
+          <input type="text" id="password" required />
+        </div>
+        <div class="form__row">
+          <label for="yearPage">Year Page (e.g. /year1-sem1.html)</label>
+          <input type="text" id="yearPage" required />
+        </div>
+        <button type="submit" class="btn">Save</button>
+        <button type="button" id="resetBtn" class="btn btn--outline">Clear</button>
+      </form>
+    </section>
+
+    <section style="margin-top: 2rem;">
+      <h2>Existing Students</h2>
+      <table border="1" width="100%" cellspacing="0" cellpadding="8">
+        <thead>
+          <tr>
+            <th>Student ID</th>
+            <th>Password</th>
+            <th>Year Page</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="studentsBody"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script>
+    const API_BASE = "http://localhost:3000/api/students";
+
+    const adminKey = sessionStorage.getItem("adminKey");
+    if (!adminKey) {
+      window.location.href = "admin-login.html";
+    }
+    const form = document.getElementById("studentForm");
+    const hiddenIdInput = document.getElementById("studentId");
+    const idInput = document.getElementById("id");
+    const passwordInput = document.getElementById("password");
+    const yearPageInput = document.getElementById("yearPage");
+    const resetBtn = document.getElementById("resetBtn");
+    const tbody = document.getElementById("studentsBody");
+
+    async function loadStudents() {
+      try {
+        const res = await fetch(API_BASE, {
+          headers: {
+            "x-admin-key": adminKey,
+          },
+        });
+        const students = await res.json();
+        tbody.innerHTML = "";
+        if (!Array.isArray(students) || students.length === 0) {
+          const tr = document.createElement("tr");
+          tr.innerHTML = '<td colspan="4">No students found</td>';
+          tbody.appendChild(tr);
+          return;
+        }
+        students.forEach((s) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${s.id}</td>
+            <td>${s.password}</td>
+            <td>${s.yearPage}</td>
+            <td>
+              <button type="button" data-action="edit" data-id="${s.id}">Edit</button>
+              <button type="button" data-action="delete" data-id="${s.id}">Delete</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch (err) {
+        console.error("Failed to load students", err);
+        tbody.innerHTML = '<tr><td colspan="4">Error loading students</td></tr>';
+      }
+    }
+
+    tbody.addEventListener("click", async (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+
+      const action = btn.getAttribute("data-action");
+      const id = btn.getAttribute("data-id");
+
+      if (action === "edit") {
+        const row = btn.closest("tr");
+        const cells = row.querySelectorAll("td");
+        hiddenIdInput.value = id;
+        idInput.value = cells[0].textContent;
+        idInput.disabled = true;
+        passwordInput.value = cells[1].textContent;
+        yearPageInput.value = cells[2].textContent;
+      }
+
+      if (action === "delete") {
+        if (!confirm("Delete this student?")) return;
+        try {
+          await fetch(`${API_BASE}/${id}`, {
+            method: "DELETE",
+            headers: {
+              "x-admin-key": adminKey,
+            },
+          });
+          loadStudents();
+        } catch (err) {
+          console.error("Failed to delete student", err);
+          alert("Failed to delete student");
+        }
+      }
+    });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const body = {
+        id: idInput.value.trim(),
+        password: passwordInput.value.trim(),
+        yearPage: yearPageInput.value.trim(),
+      };
+
+      if (!body.id || !body.password || !body.yearPage) {
+        alert("Please fill all fields");
+        return;
+      }
+
+      const existingId = hiddenIdInput.value;
+      try {
+        if (existingId) {
+          await fetch(`${API_BASE}/${existingId}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              "x-admin-key": adminKey,
+            },
+            body: JSON.stringify({ password: body.password, yearPage: body.yearPage }),
+          });
+        } else {
+          const res = await fetch(API_BASE, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "x-admin-key": adminKey,
+            },
+            body: JSON.stringify(body),
+          });
+          if (!res.ok) {
+            const data = await res.json().catch(() => ({}));
+            alert(data.message || "Failed to add student");
+          }
+        }
+        resetForm();
+        loadStudents();
+      } catch (err) {
+        console.error("Failed to save student", err);
+        alert("Failed to save student");
+      }
+    });
+
+    function resetForm() {
+      hiddenIdInput.value = "";
+      idInput.value = "";
+      idInput.disabled = false;
+      passwordInput.value = "";
+      yearPageInput.value = "";
+    }
+
+    resetBtn.addEventListener("click", () => {
+      resetForm();
+    });
+
+    loadStudents();
+  </script>
+</body>
+</html>
