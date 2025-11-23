@@ -1,0 +1,26 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Force LF line endings for these file types
+*.html text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.css text eol=lf
+*.md text eol=lf
+
+# Force binary for these file types
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.ico binary
+*.ttf binary
+*.woff binary
+*.woff2 binary
+
+# Don't modify line endings for these files
+package-lock.json -text
+*.sln text eol=crlf
+*.cmd text eol=crlf
+*.bat text eol=crlf
