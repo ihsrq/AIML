@@ -24,6 +24,91 @@
       </section>
     </main>
 
-    <script src="script.js"></script>
+    <style>
+      .error-message {
+        color: #d32f2f;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+        display: none;
+      }
+      .form-group.invalid .error-message {
+        display: block;
+      }
+      .form-group.invalid input {
+        border-color: #d32f2f;
+      }
+    </style>
+
+    <script>
+      // Add error elements to the form
+      document.addEventListener('DOMContentLoaded', function() {
+        const studentIdGroup = document.querySelector('.form-group:first-child');
+        const passwordGroup = document.querySelector('.form-group:nth-child(2)');
+        
+        // Add error message elements
+        studentIdGroup.innerHTML += '<div class="error-message" id="student-id-error"></div>';
+        passwordGroup.innerHTML += '<div class="error-message" id="password-error"></div>';
+      });
+
+      document.getElementById('login-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Reset error states
+        document.querySelectorAll('.form-group').forEach(group => group.classList.remove('invalid'));
+        
+        // Get form values
+        const studentId = document.getElementById('student-id').value.trim().toUpperCase();
+        const password = document.getElementById('password').value;
+        
+        // Basic validation
+        if (!studentId) {
+          document.getElementById('student-id-error').textContent = 'Student ID is required';
+          document.querySelector('.form-group:first-child').classList.add('invalid');
+          return;
+        }
+        
+        if (!password) {
+          document.getElementById('password-error').textContent = 'Password is required';
+          document.querySelector('.form-group:nth-child(2)').classList.add('invalid');
+          return;
+        }
+        
+        try {
+          // Fetch student data
+          const response = await fetch('students.json');
+          if (!response.ok) throw new Error('Failed to load student data');
+          
+          const students = await response.json();
+          const student = students[studentId];
+          
+          // Validate student
+          if (!student) {
+            document.getElementById('student-id-error').textContent = 'Invalid Student ID';
+            document.querySelector('.form-group:first-child').classList.add('invalid');
+            return;
+          }
+          
+          // Validate password
+          if (student.password !== password) {
+            document.getElementById('password-error').textContent = 'Incorrect password';
+            document.querySelector('.form-group:nth-child(2)').classList.add('invalid');
+            return;
+          }
+          
+          // Store login state
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('studentId', studentId);
+          console.log('Login successful, student ID:', studentId);
+          console.log('Redirecting to:', student.yearPage || 'year1-sem1.html');
+          
+          // Redirect to the correct semester page
+          window.location.href = student.yearPage || 'year1-sem1.html';
+          
+        } catch (error) {
+          console.error('Login error:', error);
+          alert('An error occurred during login. Please try again.');
+        }
+      });
+    </script>
   </body>
 </html>

@@ -124,6 +124,93 @@ section h2 {
   color: var(--accent-dark);
 }
 
+/* Results Section */
+.results {
+  margin-top: 2.5rem;
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+.results h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--accent);
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.results h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: var(--accent);
+  border-radius: 3px;
+}
+
+.results-container {
+  overflow-x: auto;
+  margin-top: 1.5rem;
+}
+
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.results-table th,
+.results-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.results-table th {
+  background-color: var(--accent);
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+}
+
+.results-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.results-table tbody tr:hover {
+  background-color: rgba(90, 26, 26, 0.05);
+}
+
+.no-results {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 2rem;
+  font-style: italic;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .results-table th,
+  .results-table td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .results {
+    padding: 1.5rem 1rem;
+  }
+}
+
 .years__intro {
   color: var(--text-muted);
   font-size: 1.05rem;
@@ -338,6 +425,17 @@ section h2 {
 .subject-card p {
   color: var(--text-muted);
   font-size: 0.95rem;
+}
+
+.subject-credits {
+  background: linear-gradient(135deg, rgba(90, 26, 26, 0.15), rgba(90, 26, 26, 0.25));
+  color: var(--accent);
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: inline-block;
+  margin: 0.25rem 0;
 }
 
 .subject-card__link {
@@ -560,39 +658,21 @@ section h2 {
       center/cover no-repeat;
 }
 
-.subject-hero--science {
-  background: url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80")
-      center/cover no-repeat;
-}
-
-.subject-hero--history {
-  background: url("https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1600&q=80")
-      center/cover no-repeat;
-}
-
-.subject-hero--language {
-  background: url("https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1600&q=80")
-      center/cover no-repeat;
-}
 
 .subject-hero--c {
-  background: url("https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?auto=format&fit=crop&w=1600&q=80")
-      center/cover no-repeat;
+  background: url("images/c-programming.jpg") center/cover no-repeat;
 }
 
 .subject-hero--analog {
-  background: url("https://images.unsplash.com/photo-1580894732444-8ecded7900cd?auto=format&fit=crop&w=1600&q=80")
-      center/cover no-repeat;
+  background: url("images/analog.jpg") center/cover no-repeat;
 }
 
 .subject-hero--chemistry {
-  background: url("https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1600&q=80")
-      center/cover no-repeat;
+  background: url("images/chemitry.jpg") center/cover no-repeat;
 }
 
 .subject-hero--web {
-  background: url("https://images.unsplash.com/photo-1523475472560-d2df97ec485c?auto=format&fit=crop&w=1600&q=80")
-      center/cover no-repeat;
+  background: url("images/web designing and programming.jpg") center/cover no-repeat;
 }
 
 .subject-main {

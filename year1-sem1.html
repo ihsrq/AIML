@@ -14,6 +14,7 @@
         <p>Kickstart your AIML journey with foundational sciences, programming, and design skills.</p>
         <a class="btn btn--outline" href="index.html">Back to Academic Years</a>
         <a class="btn" href="change-password.html">Change Password</a>
+        <a class="btn btn--outline" href="#" id="logout-btn" style="margin-left: 10px;">Logout</a>
       </div>
     </header>
 
@@ -32,6 +33,7 @@
             </figure>
             <h3>Mathematics</h3>
             <p>Subject Code: U25CS1101</p>
+            <p class="subject-credits">Credits: 4</p>
             <a href="mathematics-u25cs1101.html" class="subject-card__link">Go to Mathematics</a>
           </article>
 
@@ -44,42 +46,46 @@
             </figure>
             <h3>Analog and Digital Fundamentals</h3>
             <p>Subject Code: U25CS1102</p>
+            <p class="subject-credits">Credits: 3</p>
             <a href="analog-digital-fundamentals.html" class="subject-card__link">Go to Analog/Digital</a>
           </article>
 
           <article class="subject-card" data-subject="u25cs1103">
             <figure class="subject-card__image">
               <img
-                src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=800&q=80"
+                src="images/chemitry.jpg"
                 alt="Chemistry laboratory glassware with colorful liquids"
               />
             </figure>
             <h3>Chemistry for CSE</h3>
             <p>Subject Code: U25CS1103</p>
+            <p class="subject-credits">Credits: 3</p>
             <a href="chemistry-for-cse.html" class="subject-card__link">Go to Chemistry</a>
           </article>
 
           <article class="subject-card" data-subject="u25cs1104">
             <figure class="subject-card__image">
               <img
-                src="https://images.unsplash.com/photo-1517430816045-df4b7de1d0fb?auto=format&fit=crop&w=800&q=80"
+                src="images/c-programming.jpg"
                 alt="Student coding on a laptop"
               />
             </figure>
             <h3>Problem Solving through C</h3>
             <p>Subject Code: U25CS1104</p>
+            <p class="subject-credits">Credits: 4</p>
             <a href="c-programming.html" class="subject-card__link">Go to Course</a>
           </article>
 
           <article class="subject-card" data-subject="u25cs1105">
             <figure class="subject-card__image">
               <img
-                src="https://images.unsplash.com/photo-1523475472560-d2df97ec485c?auto=format&fit=crop&w=800&q=80"
+                src="images/web designing and programming.jpg"
                 alt="Designer working on web layouts"
               />
             </figure>
             <h3>Web Designing and Programming</h3>
             <p>Subject Code: U25CS1105</p>
+            <p class="subject-credits">Credits: 3</p>
             <a href="web-designing-programming.html" class="subject-card__link">Go to Web Design</a>
           </article>
         </div>
@@ -111,12 +117,149 @@
           >Analog &amp; Digital Fundamentals &mdash; Module 2 Notes</a>
         </div>
       </section>
+
+      
+    
+      <!-- Student Results Section -->
+      <section class="student-results" id="student-results" style="margin-top: 2rem; padding: 1.5rem; background: #f8f9fa; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h2 style="color: #2c3e50; margin-bottom: 1.5rem; font-size: 1.5rem; border-bottom: 2px solid #3498db; padding-bottom: 0.5rem;">Your Academic Results</h2>
+        
+        <div class="student-info" style="margin-bottom: 1.5rem; padding: 1rem; background: #fff; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+          <p style="margin: 0; font-size: 1.1rem;"><strong>Student ID:</strong> <span id="student-id-display" style="font-weight: bold; color: #2c3e50;">-</span></p>
+        </div>
+        
+        <div class="results-table-container" style="overflow-x: auto;">
+          <table class="results-table" style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+            <thead>
+              <tr style="background-color: #3498db; color: white;">
+                <th style="padding: 12px 15px; text-align: left;">Subject</th>
+                <th style="padding: 12px 15px; text-align: left;">Subject Code</th>
+                <th style="padding: 12px 15px; text-align: center;">Marks Obtained</th>
+                <th style="padding: 12px 15px; text-align: center;">Max Marks</th>
+                <th style="padding: 12px 15px; text-align: center;">Percentage</th>
+                <th style="padding: 12px 15px; text-align: center;">Grade</th>
+              </tr>
+            </thead>
+            <tbody id="results-body" style="background-color: #fff;">
+              <tr>
+                <td colspan="6" style="text-align: center; padding: 1rem; color: #7f8c8d;">Loading results...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
     </main>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const studentId = localStorage.getItem('studentId');
+        if (!studentId) {
+          window.location.href = 'login.html';
+          return;
+        }
+        
+        document.getElementById('student-id-display').textContent = studentId;
+        loadStudentResults(studentId);
+        
+        // Add logout functionality
+        const logoutBtn = document.getElementById('logout-btn');
+        if (logoutBtn) {
+          logoutBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('studentId');
+            window.location.href = 'login.html';
+          });
+        }
+      });
+
+      async function loadStudentResults(studentId) {
+        try {
+          // In a real application, you would fetch this from your backend
+          // const response = await fetch(`/api/students/${studentId}/results`);
+          // const results = await response.json();
+          
+          // For demo purposes, we'll use sample data
+          const results = [
+            { subject: 'Mathematics', code: 'U25CS1101', obtained: 85, max: 100 },
+            { subject: 'Analog and Digital Fundamentals', code: 'U25CS1102', obtained: 78, max: 100 },
+            { subject: 'Chemistry for CSE', code: 'U25CS1103', obtained: 92, max: 100 },
+            { subject: 'Problem Solving through C', code: 'U25CS1104', obtained: 88, max: 100 },
+            { subject: 'Web Designing and Programming', code: 'U25CS1105', obtained: 95, max: 100 }
+          ];
+
+          const tbody = document.getElementById('results-body');
+          tbody.innerHTML = ''; // Clear loading message
+
+          results.forEach(result => {
+            const percentage = ((result.obtained / result.max) * 100).toFixed(2);
+            const grade = calculateGrade(percentage);
+            
+            const row = document.createElement('tr');
+            row.style.borderBottom = '1px solid #ecf0f1';
+            row.innerHTML = `
+              <td style="padding: 12px 15px;">${result.subject}</td>
+              <td style="padding: 12px 15px;">${result.code}</td>
+              <td style="padding: 12px 15px; text-align: center;">${result.obtained}</td>
+              <td style="padding: 12px 15px; text-align: center;">${result.max}</td>
+              <td style="padding: 12px 15px; text-align: center; font-weight: 500; color: ${getPercentageColor(percentage)};">
+                ${percentage}%
+              </td>
+              <td style="padding: 12px 15px; text-align: center; font-weight: bold; color: ${getGradeColor(grade)};">
+                ${grade}
+              </td>
+            `;
+            tbody.appendChild(row);
+          });
+        } catch (error) {
+          console.error('Error loading results:', error);
+          const tbody = document.getElementById('results-body');
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="6" style="text-align: center; color: #e74c3c; padding: 1rem;">
+                Error loading results. Please try again later.
+              </td>
+            </tr>
+          `;
+        }
+      }
+
+      function calculateGrade(percentage) {
+        if (percentage >= 90) return 'A+';
+        if (percentage >= 80) return 'A';
+        if (percentage >= 70) return 'B';
+        if (percentage >= 60) return 'C';
+        if (percentage >= 50) return 'D';
+        return 'F';
+      }
+
+      function getPercentageColor(percentage) {
+        if (percentage >= 90) return '#27ae60';
+        if (percentage >= 80) return '#2ecc71';
+        if (percentage >= 70) return '#f39c12';
+        if (percentage >= 60) return '#e67e22';
+        return '#e74c3c';
+      }
+
+      function getGradeColor(grade) {
+        const colors = {
+          'A+': '#27ae60',
+          'A': '#2ecc71',
+          'B': '#f39c12',
+          'C': '#e67e22',
+          'D': '#e74c3c',
+          'F': '#c0392b'
+        };
+        return colors[grade] || '#7f8c8d';
+      }
+    </script>
 
     <footer class="footer">
       <p>&copy; <span id="year"></span> Digital Classroom Hub. All rights reserved.</p>
     </footer>
 
     <script src="script.js"></script>
+    
+    <script src="script.js"></script>
+    <script src="js/results.js"></script>
   </body>
 </html>

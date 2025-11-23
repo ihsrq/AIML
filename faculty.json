@@ -1,0 +1,18 @@
+[
+  {
+    "id": "faculty1",
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "password": "$2b$10$4GpolOumY53QaH33S3SOD.7K9xTaqt.u41JLkypzZzr/GVmOC0a6K",
+    "subjects": [
+      {
+        "code": "U25CS2102",
+        "name": "Machine Learning Fundamentals"
+      },
+      {
+        "code": "U25CS2401",
+        "name": "Advanced Machine Learning"
+      }
+    ]
+  }
+]

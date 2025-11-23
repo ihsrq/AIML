@@ -22,5 +22,41 @@
   "U25E01AI050": {
     "password": "23022006",
     "yearPage": "/year1-sem2.html"
+  },
+  "U25E01AI011": {
+    "password": "111111",
+    "yearPage": "/year1-sem1.html"
+  },
+  "U25E01AI012": {
+    "password": "111111",
+    "yearPage": "/year1-sem2.html"
+  },
+  "U25E01AI021": {
+    "password": "111111",
+    "yearPage": "/year2-sem1.html"
+  },
+  "U25E01AI022": {
+    "password": "111111",
+    "yearPage": "/year2-sem2.html"
+  },
+  "U25E01AI031": {
+    "password": "111111",
+    "yearPage": "/year3-sem1.html"
+  },
+  "U25E01AI032": {
+    "password": "111111",
+    "yearPage": "/year3-sem2.html"
+  },
+  "U25E01AI041": {
+    "password": "111111",
+    "yearPage": "/year4-sem1.html"
+  },
+  "U25E01AI042": {
+    "password": "111111",
+    "yearPage": "/year4-sem2.html"
+  },
+  "U25E01AI065": {
+    "password": "1111111",
+    "yearPage": "/year2-sem2.html"
   }
 }

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Dashboard - AI & ML Department</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .dashboard-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .welcome-message {
+            font-size: 1.5em;
+            color: #333;
+        }
+        .logout-btn {
+            background-color: #f44336;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .logout-btn:hover {
+            background-color: #d32f2f;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .card h2 {
+            margin-top: 0;
+            color: #2c3e50;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        .announcement-list {
+            margin-top: 20px;
+        }
+        .announcement-item {
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+        }
+        .announcement-date {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        .announcement-content {
+            margin: 10px 0;
+        }
+        .btn-edit, .btn-delete {
+            padding: 5px 10px;
+            font-size: 0.9em;
+            margin-right: 5px;
+        }
+        .btn-edit {
+            background-color: #2196F3;
+        }
+        .btn-edit:hover {
+            background-color: #0b7dda;
+        }
+        .btn-delete {
+            background-color: #f44336;
+        }
+        .btn-delete:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="header">
+            <h1>Faculty Dashboard</h1>
+            <div>
+                <span id="facultyName" class="welcome-message"></span>
+                <button id="logoutBtn" class="logout-btn">Logout</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Manage Subject Materials</h2>
+            <div class="form-group">
+                <label for="subjectSelect">Select Subject:</label>
+                <select id="subjectSelect" class="form-control">
+                    <!-- Will be populated by JavaScript -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="materialTitle">Material Title:</label>
+                <input type="text" id="materialTitle" class="form-control" placeholder="Enter material title">
+            </div>
+            <div class="form-group">
+                <label for="materialLink">Material Link/URL:</label>
+                <input type="url" id="materialLink" class="form-control" placeholder="Enter URL or file path">
+            </div>
+            <div class="form-group">
+                <label for="materialDescription">Description:</label>
+                <textarea id="materialDescription" class="form-control" placeholder="Enter description"></textarea>
+            </div>
+            <button id="addMaterialBtn" class="btn">Add Material</button>
+        </div>
+
+        <div class="card">
+            <h2>Post Announcement</h2>
+            <div class="form-group">
+                <label for="announcementTitle">Title:</label>
+                <input type="text" id="announcementTitle" class="form-control" placeholder="Enter announcement title">
+            </div>
+            <div class="form-group">
+                <label for="announcementContent">Content:</label>
+                <textarea id="announcementContent" class="form-control" placeholder="Enter announcement content"></textarea>
+            </div>
+            <button id="postAnnouncementBtn" class="btn">Post Announcement</button>
+        </div>
+
+        <div class="card">
+            <h2>Recent Announcements</h2>
+            <div id="announcementsList" class="announcement-list">
+                <!-- Announcements will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if faculty is logged in
+        document.addEventListener('DOMContentLoaded', async () => {
+            const facultyToken = sessionStorage.getItem('facultyToken');
+            if (!facultyToken) {
+                window.location.href = '/faculty-login.html';
+                return;
+            }
+
+            try {
+                // Fetch faculty data
+                const response = await fetch('/api/faculty/me', {
+                    headers: {
+                        'Authorization': `Bearer ${facultyToken}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch faculty data');
+                }
+
+                const facultyData = await response.json();
+                document.getElementById('facultyName').textContent = `Welcome, ${facultyData.name}`;
+                
+                // Populate subjects dropdown
+                const subjectSelect = document.getElementById('subjectSelect');
+                facultyData.subjects.forEach(subject => {
+                    const option = document.createElement('option');
+                    option.value = subject.code;
+                    option.textContent = `${subject.code} - ${subject.name}`;
+                    subjectSelect.appendChild(option);
+                });
+
+                // Load announcements
+                await loadAnnouncements();
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to load faculty data. Please try again.');
+            }
+
+            // Setup event listeners
+            document.getElementById('logoutBtn').addEventListener('click', () => {
+                sessionStorage.removeItem('facultyToken');
+                window.location.href = '/faculty-login.html';
+            });
+
+            document.getElementById('postAnnouncementBtn').addEventListener('click', postAnnouncement);
+            document.getElementById('addMaterialBtn').addEventListener('click', addMaterial);
+        });
+
+        async function loadAnnouncements() {
+            try {
+                const facultyToken = sessionStorage.getItem('facultyToken');
+                const response = await fetch('/api/announcements', {
+                    headers: {
+                        'Authorization': `Bearer ${facultyToken}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to load announcements');
+                }
+
+                const announcements = await response.json();
+                const announcementsList = document.getElementById('announcementsList');
+                announcementsList.innerHTML = '';
+
+                if (announcements.length === 0) {
+                    announcementsList.innerHTML = '<p>No announcements found.</p>';
+                    return;
+                }
+
+                announcements.forEach(announcement => {
+                    const announcementDiv = document.createElement('div');
+                    announcementDiv.className = 'announcement-item';
+                    announcementDiv.innerHTML = `
+                        <div class="announcement-date">${new Date(announcement.date).toLocaleString()}</div>
+                        <h3>${announcement.title}</h3>
+                        <div class="announcement-content">${announcement.content}</div>
+                        <div>
+                            <button class="btn btn-edit" data-id="${announcement._id}">Edit</button>
+                            <button class="btn btn-delete" data-id="${announcement._id}">Delete</button>
+                        </div>
+                    `;
+                    announcementsList.appendChild(announcementDiv);
+                });
+
+                // Add event listeners for edit/delete buttons
+                document.querySelectorAll('.btn-edit').forEach(btn => {
+                    btn.addEventListener('click', (e) => editAnnouncement(e.target.dataset.id));
+                });
+                document.querySelectorAll('.btn-delete').forEach(btn => {
+                    btn.addEventListener('click', (e) => deleteAnnouncement(e.target.dataset.id));
+                });
+
+            } catch (error) {
+                console.error('Error loading announcements:', error);
+                document.getElementById('announcementsList').innerHTML = 
+                    '<p>Error loading announcements. Please try again later.</p>';
+            }
+        }
+
+        async function postAnnouncement() {
+            const title = document.getElementById('announcementTitle').value.trim();
+            const content = document.getElementById('announcementContent').value.trim();
+            const subjectCode = document.getElementById('subjectSelect').value;
+
+            if (!title || !content) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            try {
+                const facultyToken = sessionStorage.getItem('facultyToken');
+                const response = await fetch('/api/announcements', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${facultyToken}`
+                    },
+                    body: JSON.stringify({
+                        title,
+                        content,
+                        subjectCode
+                    })
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.message || 'Failed to post announcement');
+                }
+
+                // Clear form
+                document.getElementById('announcementTitle').value = '';
+                document.getElementById('announcementContent').value = '';
+
+                // Refresh announcements
+                await loadAnnouncements();
+
+                alert('Announcement posted successfully!');
+
+            } catch (error) {
+                console.error('Error posting announcement:', error);
+                alert('Failed to post announcement: ' + error.message);
+            }
+        }
+
+        async function addMaterial() {
+            const subjectCode = document.getElementById('subjectSelect').value;
+            const title = document.getElementById('materialTitle').value.trim();
+            const link = document.getElementById('materialLink').value.trim();
+            const description = document.getElementById('materialDescription').value.trim();
+
+            if (!title || !link) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            try {
+                const facultyToken = sessionStorage.getItem('facultyToken');
+                const response = await fetch('/api/materials', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${facultyToken}`
+                    },
+                    body: JSON.stringify({
+                        subjectCode,
+                        title,
+                        link,
+                        description
+                    })
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.message || 'Failed to add material');
+                }
+
+                // Clear form
+                document.getElementById('materialTitle').value = '';
+                document.getElementById('materialLink').value = '';
+                document.getElementById('materialDescription').value = '';
+
+                alert('Material added successfully!');
+
+            } catch (error) {
+                console.error('Error adding material:', error);
+                alert('Failed to add material: ' + error.message);
+            }
+        }
+
+        async function editAnnouncement(announcementId) {
+            // Implementation for editing an announcement
+            alert('Edit functionality will be implemented here');
+        }
+
+        async function deleteAnnouncement(announcementId) {
+            if (!confirm('Are you sure you want to delete this announcement?')) {
+                return;
+            }
+
+            try {
+                const facultyToken = sessionStorage.getItem('facultyToken');
+                const response = await fetch(`/api/announcements/${announcementId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${facultyToken}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to delete announcement');
+                }
+
+                // Refresh announcements
+                await loadAnnouncements();
+
+            } catch (error) {
+                console.error('Error deleting announcement:', error);
+                alert('Failed to delete announcement: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>

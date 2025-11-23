@@ -1,0 +1,128 @@
+{
+  "U25E01AI053": {
+    "year1-sem1": [
+      { "subject": "Mathematics", "code": "U25CS1101", "obtained": 92, "max": 100 },
+      { "subject": "Analog and Digital Fundamentals", "code": "U25CS1102", "obtained": 85, "max": 100 },
+      { "subject": "Chemistry for CSE", "code": "U25CS1103", "obtained": 88, "max": 100 },
+      { "subject": "Problem Solving through C", "code": "U25CS1104", "obtained": 94, "max": 100 },
+      { "subject": "Web Designing and Programming", "code": "U25CS1105", "obtained": 90, "max": 100 }
+    ]
+  },
+  "U25E01AI068": {
+    "year1-sem1": [
+      { "subject": "Mathematics", "code": "U25CS1101", "obtained": 78, "max": 100 },
+      { "subject": "Analog and Digital Fundamentals", "code": "U25CS1102", "obtained": 82, "max": 100 },
+      { "subject": "Chemistry for CSE", "code": "U25CS1103", "obtained": 75, "max": 100 },
+      { "subject": "Problem Solving through C", "code": "U25CS1104", "obtained": 88, "max": 100 },
+      { "subject": "Web Designing and Programming", "code": "U25CS1105", "obtained": 92, "max": 100 }
+    ]
+  },
+  "U25E01AI073": {
+    "year1-sem1": [
+      { "subject": "Mathematics", "code": "U25CS1101", "obtained": 85, "max": 100 },
+      { "subject": "Analog and Digital Fundamentals", "code": "U25CS1102", "obtained": 90, "max": 100 },
+      { "subject": "Chemistry for CSE", "code": "U25CS1103", "obtained": 82, "max": 100 },
+      { "subject": "Problem Solving through C", "code": "U25CS1104", "obtained": 88, "max": 100 },
+      { "subject": "Web Designing and Programming", "code": "U25CS1105", "obtained": 95, "max": 100 }
+    ]
+  },
+  "U24E01AI001": {
+    "year2-sem1": [
+      { "subject": "Data Structures", "code": "U25CS2101", "obtained": 88, "max": 100 },
+      { "subject": "Database Management", "code": "U25CS2102", "obtained": 85, "max": 100 },
+      { "subject": "Computer Networks", "code": "U25CS2103", "obtained": 90, "max": 100 },
+      { "subject": "Operating Systems", "code": "U25CS2104", "obtained": 92, "max": 100 },
+      { "subject": "Software Engineering", "code": "U25CS2105", "obtained": 87, "max": 100 }
+    ]
+  },
+  "U25E01AI002": {
+    "year3-sem2": [
+      { "subject": "Machine Learning", "code": "U25CS3501", "obtained": 92, "max": 100 },
+      { "subject": "Artificial Intelligence", "code": "U25CS3502", "obtained": 88, "max": 100 },
+      { "subject": "Deep Learning", "code": "U25CS3503", "obtained": 85, "max": 100 },
+      { "subject": "Natural Language Processing", "code": "U25CS3504", "obtained": 90, "max": 100 },
+      { "subject": "Computer Vision", "code": "U25CS3505", "obtained": 87, "max": 100 }
+    ]
+  },
+  "U25E01AI050": {
+    "year1-sem2": [
+      { "subject": "Discrete Mathematics", "code": "U25CS1201", "obtained": 85, "max": 100 },
+      { "subject": "Digital Logic Design", "code": "U25CS1202", "obtained": 90, "max": 100 },
+      { "subject": "Object-Oriented Programming", "code": "U25CS1203", "obtained": 92, "max": 100 },
+      { "subject": "Computer Organization", "code": "U25CS1204", "obtained": 88, "max": 100 },
+      { "subject": "Environmental Science", "code": "U25HS1201", "obtained": 95, "max": 100 }
+    ]
+  },
+  "U25E01AI011": {
+    "year1-sem1": [
+      { "subject": "Mathematics", "code": "U25CS1101", "obtained": 75, "max": 100 },
+      { "subject": "Analog and Digital Fundamentals", "code": "U25CS1102", "obtained": 80, "max": 100 },
+      { "subject": "Chemistry for CSE", "code": "U25CS1103", "obtained": 82, "max": 100 },
+      { "subject": "Problem Solving through C", "code": "U25CS1104", "obtained": 78, "max": 100 },
+      { "subject": "Web Designing and Programming", "code": "U25CS1105", "obtained": 85, "max": 100 }
+    ]
+  },
+  "U25E01AI012": {
+    "year1-sem2": [
+      { "subject": "Discrete Mathematics", "code": "U25CS1201", "obtained": 90, "max": 100 },
+      { "subject": "Digital Logic Design", "code": "U25CS1202", "obtained": 85, "max": 100 },
+      { "subject": "Object-Oriented Programming", "code": "U25CS1203", "obtained": 92, "max": 100 },
+      { "subject": "Computer Organization", "code": "U25CS1204", "obtained": 88, "max": 100 },
+      { "subject": "Environmental Science", "code": "U25HS1201", "obtained": 95, "max": 100 }
+    ]
+  },
+  "U25E01AI021": {
+    "year2-sem1": [
+      { "subject": "Data Structures", "code": "U25CS2101", "obtained": 82, "max": 100 },
+      { "subject": "Database Management", "code": "U25CS2102", "obtained": 78, "max": 100 },
+      { "subject": "Computer Networks", "code": "U25CS2103", "obtained": 85, "max": 100 },
+      { "subject": "Operating Systems", "code": "U25CS2104", "obtained": 80, "max": 100 },
+      { "subject": "Software Engineering", "code": "U25CS2105", "obtained": 88, "max": 100 }
+    ]
+  },
+  "U25E01AI022": {
+    "year2-sem2": [
+      { "subject": "Algorithm Design", "code": "U25CS2201", "obtained": 90, "max": 100 },
+      { "subject": "Computer Architecture", "code": "U25CS2202", "obtained": 85, "max": 100 },
+      { "subject": "Web Technologies", "code": "U25CS2203", "obtained": 92, "max": 100 },
+      { "subject": "Microprocessors", "code": "U25CS2204", "obtained": 88, "max": 100 },
+      { "subject": "Management Studies", "code": "U25HS2201", "obtained": 95, "max": 100 }
+    ]
+  },
+  "U25E01AI031": {
+    "year3-sem1": [
+      { "subject": "Theory of Computation", "code": "U25CS3101", "obtained": 85, "max": 100 },
+      { "subject": "Compiler Design", "code": "U25CS3102", "obtained": 90, "max": 100 },
+      { "subject": "Computer Graphics", "code": "U25CS3103", "obtained": 88, "max": 100 },
+      { "subject": "Data Mining", "code": "U25CS3104", "obtained": 92, "max": 100 },
+      { "subject": "Professional Ethics", "code": "U25HS3101", "obtained": 95, "max": 100 }
+    ]
+  },
+  "U25E01AI032": {
+    "year3-sem2": [
+      { "subject": "Machine Learning", "code": "U25CS3501", "obtained": 92, "max": 100 },
+      { "subject": "Artificial Intelligence", "code": "U25CS3502", "obtained": 88, "max": 100 },
+      { "subject": "Deep Learning", "code": "U25CS3503", "obtained": 85, "max": 100 },
+      { "subject": "Natural Language Processing", "code": "U25CS3504", "obtained": 90, "max": 100 },
+      { "subject": "Computer Vision", "code": "U25CS3505", "obtained": 87, "max": 100 }
+    ]
+  },
+  "U25E01AI041": {
+    "year4-sem1": [
+      { "subject": "Cloud Computing", "code": "U25CS4101", "obtained": 90, "max": 100 },
+      { "subject": "Big Data Analytics", "code": "U25CS4102", "obtained": 88, "max": 100 },
+      { "subject": "Internet of Things", "code": "U25CS4103", "obtained": 92, "max": 100 },
+      { "subject": "Blockchain Technology", "code": "U25CS4104", "obtained": 85, "max": 100 },
+      { "subject": "Project Work I", "code": "U25CS4199", "obtained": 95, "max": 100 }
+    ]
+  },
+  "U25E01AI042": {
+    "year4-sem2": [
+      { "subject": "Cybersecurity", "code": "U25CS4201", "obtained": 92, "max": 100 },
+      { "subject": "Machine Learning Operations", "code": "U25CS4202", "obtained": 88, "max": 100 },
+      { "subject": "Edge Computing", "code": "U25CS4203", "obtained": 90, "max": 100 },
+      { "subject": "Quantum Computing", "code": "U25CS4204", "obtained": 85, "max": 100 },
+      { "subject": "Project Work II", "code": "U25CS4299", "obtained": 95, "max": 100 }
+    ]
+  }
+}

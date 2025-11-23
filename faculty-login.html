@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Login - AI & ML Department</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .login-container {
+            max-width: 400px;
+            width: 90%;
+            margin: 20px;
+            padding: 30px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .login-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .login-header h2 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .login-header p {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        .btn {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1em;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        .error-message {
+            color: #e74c3c;
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #fde8e8;
+            border-radius: 4px;
+            text-align: center;
+            display: none;
+        }
+        .login-footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+        .login-footer a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+        .password-note {
+            font-size: 0.8em;
+            color: #7f8c8d;
+            margin-top: 5px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h2>Faculty Portal</h2>
+            <p>Sign in to access your subject materials and announcements</p>
+        </div>
+        
+        <form id="facultyLoginForm">
+            <div class="form-group">
+                <label for="facultyId">Faculty ID</label>
+                <input 
+                    type="text" 
+                    id="facultyId" 
+                    name="facultyId" 
+                    placeholder="Enter your faculty ID"
+                    required
+                >
+                <div class="password-note">Format: faculty_SUBJECTCODE (e.g., faculty_U25CS2102)</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    placeholder="Enter your password"
+                    required
+                >
+                <div class="password-note">Default password: 111111</div>
+            </div>
+            
+            <button type="submit" class="btn">Sign In</button>
+        </form>
+        
+        <div id="errorMessage" class="error-message"></div>
+        
+        <div class="login-footer">
+            Need help? <a href="#" onclick="alert('Please contact the system administrator for assistance.')">Contact Support</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.getElementById('facultyLoginForm');
+            const errorElement = document.getElementById('errorMessage');
+            
+            // Auto-focus the faculty ID field
+            document.getElementById('facultyId').focus();
+            
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const facultyId = document.getElementById('facultyId').value.trim();
+                const password = document.getElementById('password').value;
+                
+                // Reset error message
+                errorElement.style.display = 'none';
+                
+                // Show loading state
+                const submitBtn = loginForm.querySelector('button[type="submit"]');
+                const originalBtnText = submitBtn.textContent;
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Signing in...';
+                submitBtn.style.opacity = '0.7';
+                
+                try {
+                    const response = await fetch('/faculty/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ facultyId, password })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        // Store faculty token and redirect to dashboard
+                        sessionStorage.setItem('facultyToken', data.token);
+                        window.location.href = '/faculty-dashboard.html';
+                    } else {
+                        errorElement.textContent = data.message || 'Login failed. Please check your credentials and try again.';
+                        errorElement.style.display = 'block';
+                        
+                        // Shake animation for error
+                        loginForm.style.animation = 'shake 0.5s';
+                        setTimeout(() => {
+                            loginForm.style.animation = '';
+                        }, 500);
+                        
+                        // Focus back on the first field with error
+                        if (data.field === 'facultyId') {
+                            document.getElementById('facultyId').focus();
+                        } else if (data.field === 'password') {
+                            document.getElementById('password').focus();
+                        }
+                    }
+                } catch (error) {
+                    console.error('Login error:', error);
+                    errorElement.textContent = 'Unable to connect to the server. Please check your internet connection and try again.';
+                    errorElement.style.display = 'block';
+                } finally {
+                    // Reset button state
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalBtnText;
+                    submitBtn.style.opacity = '1';
+                }
+            });
+            
+            // Add shake animation for errors
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes shake {
+                    0%, 100% { transform: translateX(0); }
+                    20%, 60% { transform: translateX(-5px); }
+                    40%, 80% { transform: translateX(5px); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Auto-format faculty ID to uppercase
+            document.getElementById('facultyId').addEventListener('input', function(e) {
+                this.value = this.value.toUpperCase();
+            });
+        });
+    </script>
+</body>
+</html>
