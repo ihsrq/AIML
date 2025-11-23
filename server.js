@@ -144,20 +144,29 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json({ limit: '10kb' }));
 
-// Serve static files with security headers
-app.use(express.static(__dirname, {
-  setHeaders: (res, path) => {
-    // Security headers
-    res.setHeader('X-Content-Type-Options', 'nosniff');
-    res.setHeader('X-Frame-Options', 'DENY');
-    res.setHeader('X-XSS-Protection', '1; mode=block');
-    
-    // Cache control for static assets
-    if (path.endsWith('.css') || path.endsWith('.js') || path.endsWith('.json')) {
-      res.setHeader('Cache-Control', 'public, max-age=31536000');
-    }
+// Security headers middleware
+app.use((req, res, next) => {
+  // Security headers for all responses
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  next();
+});
+
+// Serve static files from root directory
+app.use(express.static(__dirname));
+
+// Serve static files from subjects directory
+app.use('/subjects', express.static(path.join(__dirname, 'subjects')));
+
+// Set cache control headers for specific file types
+app.use((req, res, next) => {
+  const url = req.originalUrl.toLowerCase();
+  if (url.endsWith('.css') || url.endsWith('.js') || url.endsWith('.json')) {
+    res.setHeader('Cache-Control', 'public, max-age=31536000');
   }
-}));
+  next();
+});
 
 // Parse form and JSON data from POST/PUT requests
 app.use(express.urlencoded({ extended: true }));
