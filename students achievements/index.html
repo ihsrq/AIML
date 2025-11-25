@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students' Achievements</title>
+    <style>
+        body {
+            font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #2f130c;
+            background-color: #fbe0a9;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        h1 {
+            color: #5a1a1a;
+            text-align: center;
+            margin: 2rem 0 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #5a1a1a;
+            display: inline-block;
+            font-size: 2.2rem;
+            position: relative;
+        }
+        
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #3c0f0f;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        h1:hover:after {
+            transform: scaleX(1);
+        }
+        .achievement {
+            background-color: #ffecc7;
+            border-left: 4px solid #5a1a1a;
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(60, 15, 15, 0.12);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .achievement:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #5a1a1a, #3c0f0f);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .achievement:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(60, 15, 15, 0.16);
+        }
+        
+        .achievement:hover:before {
+            transform: scaleX(1);
+        }
+        .achievement h3 {
+            margin: 0 0 0.75rem 0;
+            color: #5a1a1a;
+            font-size: 1.4rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .achievement h3:after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: #3c0f0f;
+            transition: width 0.3s ease;
+        }
+        
+        .achievement:hover h3:after {
+            width: 100%;
+        }
+        .achievement p {
+            margin: 10px 0;
+        }
+        .date {
+            color: #704f3a;
+            font-size: 0.85rem;
+            margin: 1rem 0 0;
+            display: flex;
+            align-items: center;
+            font-style: italic;
+            position: relative;
+            padding-left: 1.75rem;
+        }
+        
+        .date:before {
+            content: '📅';
+            position: absolute;
+            left: 0;
+            font-style: normal;
+            opacity: 0.8;
+            transition: transform 0.3s ease;
+        }
+        
+        .achievement:hover .date:before {
+            transform: scale(1.1);
+        }
+        .student-name {
+            font-weight: 600;
+            color: #5a1a1a;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0 2px;
+        }
+        
+        .student-name:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #3c0f0f;
+            transition: width 0.3s ease;
+        }
+        
+        .student-name:hover {
+            color: #3c0f0f;
+        }
+        
+        .student-name:hover:before {
+            width: 100%;
+        }
+        .achievement-category {
+            display: inline-flex;
+            align-items: center;
+            background-color: #5a1a1a;
+            color: #fbf1d5;
+            padding: 0.35rem 1rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 0 2px 4px rgba(60, 15, 15, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .achievement-category:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(60, 15, 15, 0.25);
+            background-color: #3c0f0f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Students' Achievements</h1>
+        
+        <div class="achievement">
+            <span class="achievement-category">Academic Excellence</span>
+            <h3>Top Performer in Computer Science</h3>
+            <p><span class="student-name">John Doe</span> secured the first position in the Department of Computer Science for the academic year 2023-24.</p>
+            <p class="date">Awarded on: May 15, 2024</p>
+        </div>
+
+        <div class="achievement">
+            <span class="achievement-category" style="background-color: #2ecc71;">Research</span>
+            <h3>Best Paper Award</h3>
+            <p><span class="student-name">Sarah Johnson</span> received the Best Paper Award at the International Conference on Artificial Intelligence 2024.</p>
+            <p class="date">Awarded on: March 22, 2024</p>
+        </div>
+
+        <div class="achievement">
+            <span class="achievement-category" style="background-color: #9b59b6;">Sports</span>
+            <h3>National Level Badminton Champion</h3>
+            <p><span class="student-name">Mike Chen</span> won the gold medal in the National Inter-University Badminton Championship 2024.</p>
+            <p class="date">Awarded on: February 10, 2024</p>
+        </div>
+
+        <div class="achievement">
+            <span class="achievement-category" style="background-color: #f39c12;">Innovation</span>
+            <h3>Hackathon Winners</h3>
+            <p>Team <span class="student-name">Tech Innovators</span> (Alex, Priya, and Jordan) won first place in the Annual University Hackathon 2024 with their project on sustainable energy solutions.</p>
+            <p class="date">Awarded on: April 5, 2024</p>
+        </div>
+
+        <div class="achievement">
+            <span class="achievement-category" style="background-color: #1abc9c;">Community Service</span>
+            <h3>Outstanding Volunteer Award</h3>
+            <p><span class="student-name">Emily Wilson</span> received recognition for completing 200+ hours of community service in local education initiatives.</p>
+            <p class="date">Awarded on: January 20, 2024</p>
+        </div>
+    </div>
+</body>
+</html>
